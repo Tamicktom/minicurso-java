@@ -55,7 +55,7 @@ public class FilterTaskAuth extends OncePerRequestFilter {
           return;
         }
 
-        System.out.println("User authenticated: " + user.getUsername());
+        request.setAttribute("idUser", user.getId());
 
         filterChain.doFilter(request, response);
       }
