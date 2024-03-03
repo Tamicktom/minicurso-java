@@ -1,11 +1,13 @@
 package app.hammertail.todolist.task;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +41,14 @@ public class TaskController {
 
     TaskModel task = this.taskRepository.save(taskModel);
     return ResponseEntity.status(HttpStatus.OK).body(task);
+  }
+
+  @GetMapping("/")
+  public ResponseEntity<?> list(HttpServletRequest request) {
+
+    UUID idUser = (UUID) request.getAttribute("idUser");
+    List<TaskModel> tasks = this.taskRepository.findByIdUser(idUser);
+
+    return ResponseEntity.status(HttpStatus.OK).body(tasks);
   }
 }
