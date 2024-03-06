@@ -1,5 +1,7 @@
 FROM ubuntu:latest AS build
 
+FROM openjdk:17-jdk-slim
+
 RUN apt-get update
 RUN apt-get install openjdk-17-jdk -y
 
@@ -10,6 +12,6 @@ RUN mvn clean install
 
 EXPOSE 8080
 
-COPY --from=build /target/todolit-1.0.0.jar app.jar
+COPY --from=build /target/todolist-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
